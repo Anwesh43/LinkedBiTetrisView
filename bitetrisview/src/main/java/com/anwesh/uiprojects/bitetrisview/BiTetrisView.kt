@@ -4,6 +4,7 @@ package com.anwesh.uiprojects.bitetrisview
  * Created by anweshmishra on 24/09/18.
  */
 
+import android.app.Activity
 import android.view.View
 import android.view.MotionEvent
 import android.graphics.Canvas
@@ -189,6 +190,14 @@ class BiTetrisView(ctx : Context) : View(ctx) {
             bt.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : BiTetrisView {
+            val view : BiTetrisView = BiTetrisView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
