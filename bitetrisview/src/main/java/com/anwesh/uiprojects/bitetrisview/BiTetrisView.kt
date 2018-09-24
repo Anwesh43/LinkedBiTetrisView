@@ -107,6 +107,10 @@ class BiTetrisView(ctx : Context) : View(ctx) {
         var prev : BTNode? = null
         var next : BTNode? = null
 
+        init {
+            addNeighbor()
+        }
+
         fun addNeighbor() {
             if (i < nodes - 1) {
                 next = BTNode(i + 1)
@@ -137,6 +141,7 @@ class BiTetrisView(ctx : Context) : View(ctx) {
         }
 
         fun draw(canvas : Canvas, paint : Paint) {
+            canvas.drawBTNode(i, state.scale, paint)
             next?.draw(canvas, paint)
         }
     }
