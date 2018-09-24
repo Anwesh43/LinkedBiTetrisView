@@ -168,4 +168,26 @@ class BiTetrisView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : BiTetrisView) {
+
+        private val bt : BiTetris = BiTetris(0)
+        private val animator : Animator = Animator(view)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#BDBDBD"))
+            bt.draw(canvas, paint)
+            animator.animate {
+                bt.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            bt.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
