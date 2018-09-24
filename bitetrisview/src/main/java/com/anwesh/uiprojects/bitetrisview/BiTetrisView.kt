@@ -23,11 +23,11 @@ fun Canvas.drawBTNode(i : Int, scale : Float, paint : Paint) {
     paint.strokeCap = Paint.Cap.ROUND
     paint.color = Color.parseColor("#4527A0")
     save()
-    translate(w/2, gap)
+    translate(w/2, gap * i + gap)
     for (j in 0..1) {
         val sc : Float = Math.min(0.5f, Math.max(0f, scale - 0.5f * j)) * 2
         val sc1 : Float = Math.min(0.5f, sc) * 2
-        val sc2 : Float = Math.min(0.5f, sc) * 2
+        val sc2 : Float = Math.min(0.5f, Math.max(0f, sc - 0.5f)) * 2
         val sf : Float = 1f - 2 * (j)
         save()
         translate((w/2 - size/2) * sf * sc2, 0f)
@@ -154,7 +154,7 @@ class BiTetrisView(ctx : Context) : View(ctx) {
         private var dir : Int = 1
 
         fun draw(canvas : Canvas, paint : Paint) {
-            curr.draw(canvas, paint)
+            root.draw(canvas, paint)
         }
 
         fun update(cb : (Int, Float) -> Unit) {
