@@ -77,4 +77,43 @@ class BiTetrisView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    data class BTNode(var i : Int, val state : State = State()) {
+
+        var prev : BTNode? = null
+        var next : BTNode? = null
+
+        fun addNeighbor() {
+            if (i < nodes - 1) {
+                next = BTNode(i + 1)
+                next?.prev = this
+            }
+        }
+
+        fun getNext(dir : Int, cb : () -> Unit) : BTNode {
+            var curr : BTNode? = prev
+            if (dir == 1) {
+                curr = next
+            }
+            if (curr != null) {
+                return curr
+            }
+            cb()
+            return this
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            state.startUpdating(cb)
+        }
+
+        fun update(cb : (Int, Float) -> Unit) {
+            state.update {
+                cb(i, it)
+            }
+        }
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            next?.draw(canvas, paint)
+        }
+    }
 }
